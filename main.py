@@ -1,26 +1,42 @@
-import pygame
-pygame.init()
-player1 = pygame.Rect(100, 100, 50 , 50)
-window = pygame.display.set_mode((500,500))
-back_color = (0,255,200)
+from PyQt5.QtWidgets import QApplication,  QWidget, QLabel, QRadioButton, QPushButton, QButtonGroup, QVBoxLayout, QHBoxLayout, QMessageBox
+from PyQt5.QtCore import Qt
+app = QApplication([])
 
-game = True
-clock = pygame.time.Clock()
-while game:
-    pygame.display.update()
-    clock.tick(24)
-    window.fill(back_color)
-    pygame.draw.rect(window, (0,0,0), player1)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            game = False
-    keys = pygame.key.get_pressed()
-    if keys [pygame.K_d] and player1.x < 450:
-        player1.x += 3
-    if keys [pygame.K_a] and player1.x > 0:
-        player1.x -= 3
-    if keys [pygame.K_s] and player1.y < 450:
-        player1.y += 3
-    if keys [pygame.K_w] and player1.y > 0:
-        player1.y -= 3
-    
+
+window = QWidget()
+window.setGeometry(100,100,200,200)
+
+text = QLabel('Яка столиця США?')
+btn_answer1 = QRadioButton('Нью-Йорк')
+btn_answer2 = QRadioButton('Вашигтон')
+btn_answer3 = QRadioButton('Маямі')
+btn_answer4 = QRadioButton('Сан-Франциско')
+
+button_check = QPushButton('перевіти')
+v_layout = QVBoxLayout()
+h_layout1 = QHBoxLayout()
+h_layout2 = QHBoxLayout()
+
+h_layout1.addWidget(btn_answer1)
+h_layout1.addWidget(btn_answer2)
+h_layout2.addWidget(btn_answer3)
+h_layout2.addWidget(btn_answer4)
+v_layout.addWidget(text)
+v_layout.addLayout(h_layout1)
+v_layout.addLayout(h_layout2)
+v_layout.addWidget(button_check)
+window.setLayout(v_layout)
+def show_win():
+    win = QMessageBox()
+    win.setText('ріспєкт!! Столиця США це Вашигтон!!!!!!!')
+
+def click():
+    if btn_answer2.isChecked():
+        show_win()
+
+
+
+button_check.connect(click)
+
+window.show()
+app.exec()
